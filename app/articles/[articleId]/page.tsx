@@ -1,19 +1,22 @@
+import { use } from "react";
 import Link from "next/link";
 
-export default async function NewsArticle ({params, searchParams}:{
+export default function NewsArticle ({params, searchParams}:{
     params: Promise<{articleId: string}>;
     searchParams: Promise<{lang?: "en" | "es" | "fr"}>;
     }){
+        const { articleId } = use (params);
+        const { lang = "en"} = use (searchParams);
     return (
         <div>
-            <h1> News article id</h1>
-            <p> Reading in language</p>
+            <h1> News article {articleId}</h1>
+            <p> Reading in {lang}</p>
             
             <div>
-                <Link href="/article/id?lang=en">English</Link>    
-                <Link href="/article/id?lang=sp">Spanish</Link>
-                <Link href="/article/id?lang=fr">French</Link>
+                <Link href={`/articles/${articleId}?lang=en`}>English</Link>    
+                <Link href={`/articles/${articleId}?lang=sp`}>Spanish</Link>
+                <Link href={`/articles/${articleId}?lang=fr`}>French</Link>
             </div>
-        </div>
+        </div>  
     ); 
 }
